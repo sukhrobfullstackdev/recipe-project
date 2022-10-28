@@ -1,4 +1,4 @@
-package uz.sudev.recipeproject.entities;
+package uz.sudev.recipeproject.domain.entities;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

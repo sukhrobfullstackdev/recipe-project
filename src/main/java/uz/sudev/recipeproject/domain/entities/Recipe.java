@@ -1,9 +1,10 @@
-package uz.sudev.recipeproject.entities;
+package uz.sudev.recipeproject.domain.entities;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import uz.sudev.recipeproject.domain.enums.Difficulty;
 
 import javax.persistence.*;
 import java.util.Set;
@@ -18,14 +19,15 @@ public class Recipe {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String description;
+
     private Integer prepTime;
     private Integer cookTime;
     private Integer servings;
     private String source;
     private String url;
     private String directions;
-    // todo add
-//    private Difficulty difficulty;
+    @Enumerated(value = EnumType.STRING)
+    private Difficulty difficulty;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "recipe")
     private Set<Ingredient> ingredients;
     @Lob
