@@ -20,4 +20,8 @@ public class Category {
     private String categoryName;
     @ManyToMany(mappedBy = "categories")
     private Set<Recipe> recipes;
+
+    public Category(String categoryName) {
+        this.categoryName = categoryName;
+    }
 }
