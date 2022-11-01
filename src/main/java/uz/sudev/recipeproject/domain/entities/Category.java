@@ -13,10 +13,7 @@ import java.util.Set;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class Category {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+public class Category extends BaseEntity {
     private String categoryName;
     @ManyToMany(mappedBy = "categories")
     private Set<Recipe> recipes;
