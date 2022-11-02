@@ -6,6 +6,7 @@ import uz.sudev.recipeproject.repositories.RecipeRepository;
 import uz.sudev.recipeproject.services.interfaces.RecipeService;
 
 import java.util.HashSet;
+import java.util.Optional;
 import java.util.Set;
 @Service
 public class RecipeServiceImpl implements RecipeService {
@@ -20,5 +21,16 @@ public class RecipeServiceImpl implements RecipeService {
         Set<Recipe> recipes = new HashSet<>();
         recipeRepository.findAll().iterator().forEachRemaining(recipes::add);
         return recipes;
+    }
+    @Override
+    public Recipe findById(Long l) {
+
+        Optional<Recipe> recipeOptional = recipeRepository.findById(l);
+
+        if (recipeOptional.isEmpty()) {
+            throw new RuntimeException("Recipe Not Found!");
+        }
+
+        return recipeOptional.get();
     }
 }
