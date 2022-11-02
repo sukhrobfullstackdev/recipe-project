@@ -16,7 +16,6 @@ import java.util.Set;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@JsonIgnoreProperties(ignoreUnknown = true)
 public class Category extends BaseEntity {
     private String categoryName;
     @ManyToMany(mappedBy = "categories")

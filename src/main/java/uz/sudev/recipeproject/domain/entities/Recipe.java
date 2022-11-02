@@ -46,4 +46,20 @@ public class Recipe extends BaseEntity{
         this.ingredients.add(ingredient);
         return this;
     }
+
+    public Recipe(Long id, String description, Integer prepTime, Integer cookTime, Integer servings, String source, String url, String directions, Set<Category> categories, Difficulty difficulty, Set<Ingredient> ingredients, Byte[] image, Notes notes) {
+        super(id);
+        this.description = description;
+        this.prepTime = prepTime;
+        this.cookTime = cookTime;
+        this.servings = servings;
+        this.source = source;
+        this.url = url;
+        this.directions = directions;
+        this.categories = categories;
+        this.difficulty = difficulty;
+        this.ingredients = ingredients;
+        this.image = image;
+        this.notes = notes;
+    }
 }
