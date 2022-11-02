@@ -40,7 +40,6 @@ public class RecipeBootstrap implements ApplicationListener<ContextRefreshedEven
     private List<Recipe> getRecipes() {
 
         List<Recipe> recipes = new ArrayList<>(2);
-
         //get UOMs
         categoryRepository.save(new Category("American"));
         categoryRepository.save(new Category("Italian"));

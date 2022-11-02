@@ -38,6 +38,7 @@
                             </tr>
                             </thead>
                             <tr th:each="recipe : ${recipes}">
+                                <!--/*@thymesVar id="recipe" type="guru.springframework.domain.Recipe"*/-->
                                 <td th:text="${recipe.id}">1</td>
                                 <td th:text="${recipe.description}">Tasty Goodnees 3</td>
                                 <td th:text="${recipe.prepTime}">12 min</td>
