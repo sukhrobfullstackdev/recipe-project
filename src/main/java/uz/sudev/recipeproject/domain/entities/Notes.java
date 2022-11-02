@@ -14,7 +14,7 @@ import javax.persistence.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class Notes extends BaseEntity{
+public class Notes extends BaseEntity {
     @OneToOne
     private Recipe recipe;
     @Lob
