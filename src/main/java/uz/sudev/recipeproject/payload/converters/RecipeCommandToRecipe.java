@@ -7,6 +7,9 @@ import org.springframework.stereotype.Component;
 import uz.sudev.recipeproject.domain.entities.Recipe;
 import uz.sudev.recipeproject.payload.commands.RecipeCommand;
 import org.springframework.core.convert.converter.Converter;
+
+import java.util.Objects;
+
 /**
  * Created by jt on 6/21/17.
  */
@@ -28,9 +31,6 @@ public class RecipeCommandToRecipe implements Converter<RecipeCommand, Recipe> {
     @Nullable
     @Override
     public Recipe convert(RecipeCommand source) {
-        if (source == null) {
-            return null;
-        }
 
         final Recipe recipe = new Recipe();
         recipe.setId(source.getId());
@@ -42,7 +42,7 @@ public class RecipeCommandToRecipe implements Converter<RecipeCommand, Recipe> {
         recipe.setServings(source.getServings());
         recipe.setSource(source.getSource());
         recipe.setUrl(source.getUrl());
-        recipe.setNotes(notesConverter.convert(source.getNotes()));
+        recipe.setNotes(Objects.requireNonNull(notesConverter.convert(source.getNotes())));
 
         if (source.getCategories() != null && source.getCategories().size() > 0){
             source.getCategories()
