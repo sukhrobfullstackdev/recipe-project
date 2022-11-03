@@ -35,6 +35,7 @@
                                 <th>Directions</th>
                                 <th>Difficulty</th>
                                 <td>View</td>
+                                <td>Update</td>
                             </tr>
                             </thead>
                             <tr th:each="recipe : ${recipes}">
@@ -46,6 +47,7 @@
                                 <td th:text="${recipe.directions}">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusantium, vero!</td>
                                 <td th:text="${recipe.difficulty}">HARD</td>
                                 <td><a href="#" th:href="@{'/recipe/show/' + ${recipe.id}}">View</a></td>
+                                <td><a href="#" th:href="@{'/recipe/' + ${recipe.id} + '/update'}">Update</a></td>
                             </tr>
                         </table>
                     </div>

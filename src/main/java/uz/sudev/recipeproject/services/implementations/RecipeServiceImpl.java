@@ -2,6 +2,7 @@ package uz.sudev.recipeproject.services.implementations;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import uz.sudev.recipeproject.domain.entities.Recipe;
 import uz.sudev.recipeproject.payload.commands.RecipeCommand;
 import uz.sudev.recipeproject.payload.converters.RecipeCommandToRecipe;
@@ -48,10 +49,17 @@ public class RecipeServiceImpl implements RecipeService {
     }
 
     @Override
+    @Transactional
     public RecipeCommand saveRecipeCommand(RecipeCommand recipeCommand) {
         Recipe detachedRecipe = recipeCommandToRecipe.convert(recipeCommand);
         Recipe savedRecipe = null;
         if (detachedRecipe != null)  savedRecipe = recipeRepository.save(detachedRecipe);
         return recipeToRecipeCommand.convert(Objects.requireNonNull(savedRecipe));
+    }
+
+    @Override
+    @Transactional
+    public RecipeCommand findCommandById(Long l) {
+        return recipeToRecipeCommand.convert(findById(l));
     }
 }
