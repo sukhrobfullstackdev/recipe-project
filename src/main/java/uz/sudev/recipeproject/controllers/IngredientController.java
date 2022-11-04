@@ -40,7 +40,7 @@ public class IngredientController {
                                          @PathVariable String id, Model model){
         model.addAttribute("ingredient", ingredientService.findByRecipeIdAndIngredientId(Long.valueOf(recipeId), Long.valueOf(id)));
         model.addAttribute("uomList", unitOfMeasureService.listAllUoms());
-        return "recipe/ingredient/ingredientform";
+        return "recipe/ingredient/ingredientForm";
     }
 
     @PostMapping("recipe/{recipeId}/ingredient")

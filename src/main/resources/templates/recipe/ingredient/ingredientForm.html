@@ -27,7 +27,7 @@
                             <h1 class="panel-title">Edit Ingredient Information</h1>
                         </div>
                         <div class="panel-body">
-
+                            <input type="hidden" class="form-control" th:field="*{recipeId}"/>
 
                             <div class="row">
                                 <div class="col-md-3 form-group">
@@ -45,7 +45,7 @@
                                     <select class="form-control" name="uom.id">
                                         <option th:each="uomEach : ${uomList}"
                                                 th:value="${uomEach.id}"
-                                                th:selected="${uomEach.id.equals(ingredient.uom.id)}"
+                                                th:selected="${uomEach.id.equals(ingredient.unitOfMeasure.id)}"
                                                 th:text="${uomEach.description}">Each</option>
                                     </select>
                                 </div>
