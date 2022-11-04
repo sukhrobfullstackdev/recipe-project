@@ -11,6 +11,7 @@ import uz.sudev.recipeproject.repositories.RecipeRepository;
 import uz.sudev.recipeproject.repositories.UnitOfMeasureRepository;
 import uz.sudev.recipeproject.services.interfaces.IngredientService;
 
+import java.util.Objects;
 import java.util.Optional;
 
 @Service
@@ -77,16 +78,18 @@ public class IngredientServiceImpl implements IngredientService {
                         .orElseThrow(() -> new RuntimeException("UOM NOT FOUND"))); //todo address this
             } else {
                 //add new Ingredient
-                recipe.addIngredient(ingredientCommandToIngredient.convert(command));
+                Ingredient ingredient = ingredientCommandToIngredient.convert(command);
+                Objects.requireNonNull(ingredient).setRecipe(recipe);
+                recipe.addIngredient(ingredient);
             }
 
             Recipe savedRecipe = recipeRepository.save(recipe);
 
-            //to do check for fail
-            return ingredientToIngredientCommand.convert(savedRecipe.getIngredients().stream()
-                    .filter(recipeIngredients -> recipeIngredients.getId().equals(command.getId()))
-                    .findFirst()
-                    .get());
+            Optional<Ingredient> savedIngredientOptional = savedRecipe.getIngredients().stream().filter(recipeIngredients -> recipeIngredients.getDescription().equals(command.getDescription()))
+                    .filter(recipeIngredients -> recipeIngredients.getAmount().equals(command.getAmount()))
+                    .filter(recipeIngredients -> recipeIngredients.getUnitOfMeasure().getId().equals(command.getUnitOfMeasure().getId()))
+                    .findFirst();
+            return ingredientToIngredientCommand.convert(savedIngredientOptional.get());
         }
 
     }
