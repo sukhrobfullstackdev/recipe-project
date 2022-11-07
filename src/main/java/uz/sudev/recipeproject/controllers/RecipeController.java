@@ -1,17 +1,17 @@
 package uz.sudev.recipeproject.controllers;
 
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.ModelAndView;
-import uz.sudev.recipeproject.exceptions.NotFoundException;
 import uz.sudev.recipeproject.payload.commands.RecipeCommand;
 import uz.sudev.recipeproject.services.interfaces.RecipeService;
 
+import javax.validation.Valid;
+
 @Controller
 public class RecipeController {
-
+    private static final String RECIPE_RECIPE_FORM_URL = "recipe/recipeform";
     private final RecipeService recipeService;
 
     public RecipeController(RecipeService recipeService) {
@@ -39,9 +39,12 @@ public class RecipeController {
     }
 
     @PostMapping("recipe")
-    public String saveOrEditRecipe(@ModelAttribute RecipeCommand recipeCommand) {
-        RecipeCommand savedCommand = recipeService.saveRecipeCommand(recipeCommand);
-        return "redirect:/recipe/show/" + savedCommand.getId();
+    public String saveOrUpdate(@Valid @ModelAttribute("recipe") RecipeCommand command, BindingResult bindingResult){
+        if(bindingResult.hasErrors()){
+            return RECIPE_RECIPE_FORM_URL;
+        }
+        RecipeCommand savedCommand = recipeService.saveRecipeCommand(command);
+        return "redirect:/recipe/" + savedCommand.getId() + "/show";
     }
 
     @GetMapping
@@ -49,22 +52,5 @@ public class RecipeController {
     public String deleteById(@PathVariable String id) {
         recipeService.deleteById(Long.valueOf(id));
         return "redirect:/";
-    }
-
-    @ResponseStatus(HttpStatus.NOT_FOUND)
-    @ExceptionHandler(NotFoundException.class)
-    public ModelAndView handleNotFound(Exception exception) {
-        ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("404error");
-        modelAndView.addObject("exception", exception);
-        return modelAndView;
-    }
-    @ResponseStatus(HttpStatus.BAD_REQUEST)
-    @ExceptionHandler(NumberFormatException.class)
-    public ModelAndView handleBadRequest(Exception exception) {
-        ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("400error");
-        modelAndView.addObject("exception", exception);
-        return modelAndView;
     }
 }
